@@ -11,7 +11,6 @@ import in.javabysuraj.app.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +39,6 @@ public class AuthorServiceImp implements AuthorServiceInt {
         }
         Author savedAuthor = authRepo.saveAndFlush(author);
 
-
         AuthorResponseDTO authorResponseDTO = new AuthorResponseDTO();
         authorResponseDTO.setId(savedAuthor.getId());
         authorResponseDTO.setName(savedAuthor.getName());
@@ -54,7 +52,6 @@ public class AuthorServiceImp implements AuthorServiceInt {
             bookResponseDTO.setPrice(b.getPrice());
             bookResponseDTOList.add(bookResponseDTO);
         }
-
 
         authorResponseDTO.setBooks(bookResponseDTOList);
 
