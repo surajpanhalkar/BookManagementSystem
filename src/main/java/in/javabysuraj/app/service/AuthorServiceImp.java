@@ -57,4 +57,31 @@ public class AuthorServiceImp implements AuthorServiceInt {
 
         return authorResponseDTO;
     }
+
+    public List<AuthorResponseDTO> getAllAuthors() {
+
+        List<Author> authors = authRepo.findAll();
+
+        List<AuthorResponseDTO> authorResponseDTOList = new ArrayList<>();
+        for (Author author : authors) {
+            AuthorResponseDTO authDto = new AuthorResponseDTO();
+            authDto.setId(author.getId());
+            authDto.setName(author.getName());
+
+            List<BookResponseDTO> bookResponseDTOList = new ArrayList<>();
+
+            for (Book book : author.getBooks()) {
+                BookResponseDTO bookDto = new BookResponseDTO();
+                bookDto.setId(book.getId());
+                bookDto.setTitle(book.getTitle());
+                bookDto.setPrice(book.getPrice());
+
+                bookResponseDTOList.add(bookDto);
+            }
+            authDto.setBooks(bookResponseDTOList);
+            authorResponseDTOList.add(authDto);
+        }
+        return authorResponseDTOList;
+
+    }
 }
