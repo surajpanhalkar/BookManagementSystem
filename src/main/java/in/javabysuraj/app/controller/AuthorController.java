@@ -21,14 +21,19 @@ public class AuthorController {
         return ResponseEntity.ok(service.createAuthor(dto));
     }
 
-    @GetMapping ("/all")
-    public ResponseEntity<List<AuthorResponseDTO>> getAllAuthors(){
+    @GetMapping("/all")
+    public ResponseEntity<List<AuthorResponseDTO>> getAllAuthors() {
         return ResponseEntity.ok(service.getAllAuthors());
     }
 
     @GetMapping("/{id}")
     public AuthorResponseDTO getAuthorById(@PathVariable Long id) {
         return service.getAuthorById(id);
+    }
+
+    @PutMapping("{id}")
+    public AuthorResponseDTO updateAuthor(@PathVariable Long id, @RequestBody AuthorRequestDTO dto) {
+        return service.updateAuthor(id, dto);
     }
 
 }

@@ -112,4 +112,50 @@ public class AuthorServiceImp implements AuthorServiceInt {
         response.setBooks(bookResponseDTOList);
         return response;
     }
+
+    @Override
+    public AuthorResponseDTO updateAuthor(Long id, AuthorRequestDTO dto) {
+        Author author = authRepo.findById(id).orElse(null);
+
+        if (author == null) {
+            return null;
+        }
+
+        if (dto.getName() != null) {
+            author.setName(dto.getName());
+        }
+        List<Book> books = new ArrayList<>();
+
+        if (dto.getBooks() != null) {
+            for (BookRequestDTO bookDto : dto.getBooks()) {
+                Book book = new Book();
+                book.setTitle(bookDto.getTitle());
+                book.setPrice(bookDto.getPrice());
+                book.setAuthor(author);
+                books.add(book);
+            }
+        }
+
+        author.setBooks(books);
+
+
+        Author savedAuthor = authRepo.saveAndFlush(author);
+
+        AuthorResponseDTO responseDTO = new AuthorResponseDTO();
+        responseDTO.setId(savedAuthor.getId());
+        responseDTO.setName(savedAuthor.getName());
+
+        List<BookResponseDTO> bookResponseDTOList = new ArrayList<>();
+        if (savedAuthor.getBooks() != null) {
+            for (Book book : savedAuthor.getBooks()) {
+                BookResponseDTO bookResponseDTO = new BookResponseDTO();
+                bookResponseDTO.setId(book.getId());
+                bookResponseDTO.setTitle(book.getTitle());
+                bookResponseDTO.setPrice(book.getPrice());
+                bookResponseDTOList.add(bookResponseDTO);
+            }
+        }
+        responseDTO.setBooks(bookResponseDTOList);
+        return responseDTO;
+    }
 }

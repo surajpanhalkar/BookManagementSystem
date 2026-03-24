@@ -6,7 +6,11 @@ import in.javabysuraj.app.DTO.AuthorResponseDTO;
 import java.util.List;
 
 public interface AuthorServiceInt {
-    public AuthorResponseDTO createAuthor(AuthorRequestDTO dto);
-    public List<AuthorResponseDTO> getAllAuthors();
-    public AuthorResponseDTO getAuthorById(Long id);
+    AuthorResponseDTO createAuthor(AuthorRequestDTO dto);
+
+    List<AuthorResponseDTO> getAllAuthors();
+
+    AuthorResponseDTO getAuthorById(Long id);
+
+   AuthorResponseDTO updateAuthor(Long id, AuthorRequestDTO dto);
 }
