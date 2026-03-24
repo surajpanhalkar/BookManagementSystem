@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface AuthorServiceInt {
     public AuthorResponseDTO createAuthor(AuthorRequestDTO dto);
-//    public List<AuthorResponseDTO> getAllAuthors();
+    public List<AuthorResponseDTO> getAllAuthors();
+    public AuthorResponseDTO getAuthorById(Long id);
 }

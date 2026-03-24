@@ -58,6 +58,7 @@ public class AuthorServiceImp implements AuthorServiceInt {
         return authorResponseDTO;
     }
 
+    @Override
     public List<AuthorResponseDTO> getAllAuthors() {
 
         List<Author> authors = authRepo.findAll();
@@ -83,5 +84,32 @@ public class AuthorServiceImp implements AuthorServiceInt {
         }
         return authorResponseDTOList;
 
+    }
+
+    @Override
+    public AuthorResponseDTO getAuthorById(Long id) {
+
+        Author author = authRepo.findById(id).orElse(null);
+
+        if (author == null) {
+            return null;
+        }
+
+        AuthorResponseDTO response = new AuthorResponseDTO();
+        response.setId(author.getId());
+        response.setName(author.getName());
+
+        List<BookResponseDTO> bookResponseDTOList = new ArrayList<>();
+        if (author.getBooks() != null) {
+            for (Book books : author.getBooks()) {
+                BookResponseDTO booResponseDTO = new BookResponseDTO();
+                booResponseDTO.setId(books.getId());
+                booResponseDTO.setTitle(books.getTitle());
+                booResponseDTO.setPrice(books.getPrice());
+                bookResponseDTOList.add(booResponseDTO);
+            }
+        }
+        response.setBooks(bookResponseDTOList);
+        return response;
     }
 }
